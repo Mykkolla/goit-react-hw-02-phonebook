@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
 import { nanoid } from 'nanoid';
-// import Statistics from './Statistics/Statistics';
+import Filter from './Filter/Filter';
 import ContactForm from './ContactForm/ContactForm';
-// import Section from './Section/Section';
-// import Notification from './NotificationMessage/NotificationMessage';
+import ContactList from './ContactList/ContactList';
+import { Layout } from './Style/Layout';
 
 export class PhoneBook extends Component {
   state = {
-    contacts: [],
+    contacts: [
+      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+    ],
     filter: '',
     name: '',
     number: '',
@@ -65,7 +70,7 @@ export class PhoneBook extends Component {
     );
 
     return (
-      <div>
+      <Layout>
         <h1>PhoneBook</h1>
         <ContactForm
           name={this.state.name}
@@ -75,51 +80,16 @@ export class PhoneBook extends Component {
           handleSubmit={this.handleSubmit}
         />
         <h2>Contact List</h2>
-        <label>
-          Filter contacts by name:
-          <input
-            type="text"
-            name="filter"
-            value={this.state.filter}
-            onChange={this.handleFilterChange}
-          />
-        </label>
+        <Filter value={this.state.filter} onChange={this.handleFilterChange} />
         {filteredContacts.length > 0 ? (
-          <ul>
-            {filteredContacts.map(contact => (
-              <li key={contact.id}>
-                {contact.name} {contact.number}
-                <button
-                  type="button"
-                  onClick={() => this.deleteContact(contact.id)}
-                >
-                  Delete Contact
-                </button>
-              </li>
-            ))}
-          </ul>
+          <ContactList
+            contacts={filteredContacts}
+            onDelete={this.deleteContact}
+          />
         ) : (
           <p>No contacts yet.</p>
         )}
-      </div>
+      </Layout>
     );
   }
 }
-
-// return (
-//   <div>
-//     <h1>Phonebook</h1>
-//     <ContactForm
-//       name={this.state.name}
-//       number={this.state.number}
-//       handleNameChange={this.handleNameChange}
-//       handlePhoneChange={this.handlePhoneChange}
-//       handleSubmit={this.handleSubmit}
-//     />
-//     <h2>Contacts</h2>
-//     <Filter value={this.state.filter} onChange={this.handleFilterChange} />
-//     <ContactList contacts={filteredContacts} onDelete={this.deleteContact} />
-//   </div>
-// );
-// }
-// }

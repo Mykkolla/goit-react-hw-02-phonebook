@@ -1,6 +1,7 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
-// import { Button } from './FeedbackOptions.styled';
+import { AddContactBtn } from '../../components/Style/AddContact.styled.js';
+import { FcContacts } from 'react-icons/fc';
 
 const ContactForm = ({
   name,
@@ -24,7 +25,7 @@ const ContactForm = ({
         />
       </label>
       <label>
-        Number
+        Number:
         <input
           type="tel"
           name="number"
@@ -35,7 +36,10 @@ const ContactForm = ({
           onChange={handlePhoneChange}
         />
       </label>
-      <button type="submit">Add Contact</button>
+      <AddContactBtn type="submit">
+        <FcContacts />
+        Add Contact
+      </AddContactBtn>
     </form>
   );
 };
