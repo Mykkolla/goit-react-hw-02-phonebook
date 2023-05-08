@@ -1,6 +1,5 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
-// import { Button } from './FeedbackOptions.styled';
+import PropTypes from 'prop-types';
 
 const Filter = ({ value, onChange }) => {
   return (
@@ -12,3 +11,8 @@ const Filter = ({ value, onChange }) => {
 };
 
 export default Filter;
+
+Filter.propTypes = {
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+};

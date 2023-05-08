@@ -41,8 +41,8 @@ export class PhoneBook extends Component {
 
     const newContact = {
       id: nanoid(),
-      name: this.state.name,
-      number: this.state.number,
+      name: this.state.name.trim(),
+      number: this.state.number.trim(),
     };
 
     const existingNames = this.state.contacts.map(contact => contact.name);

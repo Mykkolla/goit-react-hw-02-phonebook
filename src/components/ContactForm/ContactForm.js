@@ -1,5 +1,5 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { AddContactBtn } from '../../components/Style/AddContact.styled.js';
 import { FcContacts } from 'react-icons/fc';
 
@@ -45,3 +45,11 @@ const ContactForm = ({
 };
 
 export default ContactForm;
+
+ContactForm.propTypes = {
+  name: PropTypes.string.isRequired,
+  number: PropTypes.string.isRequired,
+  handleNameChange: PropTypes.func.isRequired,
+  handlePhoneChange: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+};
