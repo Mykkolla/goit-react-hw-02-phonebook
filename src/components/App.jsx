@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { nanoid } from 'nanoid';
 import Filter from './Filter/Filter';
-import ContactForm from './ContactForm/ContactForm';
+import { ContactForm } from './ContactForm/ContactForm';
 import ContactList from './ContactList/ContactList';
 import { Layout } from './Style/Layout';
 
@@ -14,35 +14,13 @@ export class PhoneBook extends Component {
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
     filter: '',
-    name: '',
-    number: '',
   };
 
-  handleNameChange = event => {
-    this.setState({
-      name: event.target.value,
-    });
-  };
-
-  handlePhoneChange = event => {
-    this.setState({
-      number: event.target.value,
-    });
-  };
-
-  handleFilterChange = event => {
-    this.setState({
-      filter: event.target.value,
-    });
-  };
-
-  handleSubmit = event => {
-    event.preventDefault();
-
+  addContact = ({ name, number }) => {
     const newContact = {
       id: nanoid(),
-      name: this.state.name.trim(),
-      number: this.state.number.trim(),
+      name: name,
+      number: number,
     };
 
     const existingNames = this.state.contacts.map(contact => contact.name);
@@ -53,8 +31,6 @@ export class PhoneBook extends Component {
 
     this.setState(prevState => ({
       contacts: [...prevState.contacts, newContact],
-      name: '',
-      number: '',
     }));
   };
 
@@ -64,24 +40,29 @@ export class PhoneBook extends Component {
     }));
   };
 
-  render() {
-    const filteredContacts = this.state.contacts.filter(contact =>
-      contact.name.toLowerCase().includes(this.state.filter.toLowerCase())
+  handleFilterChange = event => {
+    this.setState({
+      filter: event.target.value,
+    });
+  };
+
+  getVisibleContacts = () =>
+    this.state.contacts.filter(contact =>
+      String(contact.name)
+        .toLowerCase()
+        .includes(this.state.filter.toLowerCase())
     );
+
+  render() {
+    const filteredContacts = this.getVisibleContacts();
 
     return (
       <Layout>
         <h1>PhoneBook</h1>
-        <ContactForm
-          name={this.state.name}
-          number={this.state.number}
-          handleNameChange={this.handleNameChange}
-          handlePhoneChange={this.handlePhoneChange}
-          handleSubmit={this.handleSubmit}
-        />
+        <ContactForm onSubmit={this.addContact} />
         <h2>Contact List</h2>
         <Filter value={this.state.filter} onChange={this.handleFilterChange} />
-        {filteredContacts.length > 0 ? (
+        {this.state.contacts.length > 0 ? (
           <ContactList
             contacts={filteredContacts}
             onDelete={this.deleteContact}
