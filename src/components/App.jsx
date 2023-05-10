@@ -17,17 +17,24 @@ export class PhoneBook extends Component {
   };
 
   addContact = ({ name, number }) => {
+    // const existingNames = this.state.contacts.map(contact => contact.name);
+    const existingNames = this.state.contacts.some(
+      contact => contact.name.toLowerCase() === name.toLowerCase()
+    );
+
+    // if (existingNames.includes(newContact.name)) {
+    //   alert(`${newContact.name} is already in contacts.`);
+    //   return;
+    // }
+    if (existingNames) {
+      alert(`${name} is already in contacts.`);
+      return;
+    }
     const newContact = {
       id: nanoid(),
       name: name,
       number: number,
     };
-
-    const existingNames = this.state.contacts.map(contact => contact.name);
-    if (existingNames.includes(newContact.name)) {
-      alert(`${newContact.name} is already in contacts.`);
-      return;
-    }
 
     this.setState(prevState => ({
       contacts: [...prevState.contacts, newContact],
