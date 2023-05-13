@@ -75,7 +75,7 @@ export class PhoneBook extends Component {
             onDelete={this.deleteContact}
           />
         ) : (
-          <p>No contacts yet.</p>
+          <p>No contacts yet</p>
         )}
       </Layout>
     );
